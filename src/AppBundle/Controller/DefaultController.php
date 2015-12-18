@@ -3,10 +3,11 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as baseController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContext;
 
-class DefaultController extends Controller
+class DefaultController extends baseController
 {
     /**
      * @Route("/", name="homepage")
@@ -19,7 +20,7 @@ class DefaultController extends Controller
         ));
     }
     /**
-     * @Route("/login_check", name="loginCheck")
+     * @Route("/admin/login_check", name="loginCheck")
      */
     public function checkAction(Request $request)
     {
@@ -37,5 +38,21 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
+    }
+    /**
+     * @Route("/debug", name="debug")
+     */
+    public function debugAction(Request $request) {
+        $session = $request->getSession();
+
+        if($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        }
+        else {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+
+        return $this->render('default/error.html.twig',array('error'=>$error));
     }
 }

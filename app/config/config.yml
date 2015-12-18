@@ -78,7 +78,7 @@ be_simple_sso_auth:
             logout_url: https://192.168.0.56:49163/cas/logout
             validation_url: https://192.168.0.56:49163/cas/serviceValidate
 
-#fos_user:
-#    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-#    firewall_name: main
-#    user_class: AppBundle\Entity\User
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AppBundle\Entity\User

@@ -2,10 +2,14 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-#fos_user:
-#    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
-login:
+security_check:
+    pattern: /admin/check_path
+
+security_login:
     pattern: /login
-logout:
+
+security_logout:
     pattern: /logout
